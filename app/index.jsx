@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableOpacity, Pressable, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Path, Svg } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from "react";
 import { useForm } from "react-hook-form"
+import { Link } from 'expo-router';
 
 
 const Icons = {
@@ -42,7 +43,7 @@ const Icons = {
   ),
 };
 
-export default function App() {
+export default function Page() {
 
   const { control } = useForm();
   const [show, setShow] = React.useState(true);
@@ -52,7 +53,6 @@ export default function App() {
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
   };
-
 
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -65,103 +65,139 @@ export default function App() {
   return (
 
     <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
+      
+      <ScrollView>
 
+        <StatusBar style="light" />
 
-      <View style={styles.main}>
+        <View style={styles.main}>
 
+          <View style={styles.heading}>
 
-        <View style={styles.heading}>
-          <Text style={styles.leading}> Log in to your Account✨</Text>
-          <Text style={styles.subTitle}>Welcome back! Please enter your details</Text>
-
-        </View>
-        <View style={styles.form}>
-
-          <View style={styles.control}>
-            <Text style={styles.inputText}>
-              Email
-            </Text>
-            <Icon name="mail-outline" size={20} color="#8c959f" style={styles.iconLeft} />
-            <TextInput
-              placeholder="Enter your email"
-              textContentType="emailAddress"
-              placeholderTextColor="gray"
-              style={styles.input}
-            />
-
-          </View>
-
-          <View style={styles.control}>
-            <Text style={styles.inputText}>Password</Text>
-            <Icon name="lock-outline" size={20} color="#8c959f" style={styles.iconLeft} />
-            <TextInput style={styles.input}
-              placeholder="************ "
-              value={password}
-              onChangeText={setPassword}
-              placeholderTextColor="gray"
-              secureTextEntry={!showPassword} />
-
-          </View>
-
-          <Pressable onPress={togglePasswordVisibility}>
-            <Icon name={showPassword ? "visibility" : "visibility-off"} size={27} color="#8c959f" style={styles.iconRight} />
-          </Pressable>
-
-
-        </View>
-
-        <View style={styles.days}>
-          <TouchableOpacity onPress={toggleCheckbox}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {isChecked ? (
-                <Icon name="check-box" size={15} color="white" />
-              ) : (
-                <Icon name="check-box-outline-blank" size={15} color="white" />
-              )}
+            <View style={styles.LoginIcon}>
+              <Text style={styles.leading}> Log in to your Account✨</Text>
+              <Icon name="brightness-3" size={25} color="white" style={styles.sunicon} />
             </View>
-          </TouchableOpacity>
-          <Text style={{ color: "gray" }}>Remember for 30days</Text>
-          <Text style={{ fontWeight: "bold", paddingLeft: 120, color: "white" }}>Forgot password</Text>
+
+            <Text style={styles.subTitle}>Welcome back! Please enter your details</Text>
+
+          </View>
+          <View style={styles.form}>
+
+            <View style={styles.control}>
+              <Text style={styles.inputText}>
+                Email
+              </Text>
+              <Icon name="mail-outline" size={20} color="#8c959f" style={styles.iconLeft} />
+              <TextInput
+                placeholder="Enter your email"
+                textContentType="emailAddress"
+                placeholderTextColor="gray"
+                style={styles.input}
+              />
+
+            </View>
+
+            <View style={styles.control}>
+              <Text style={styles.inputText}>Password</Text>
+              <Icon name="lock-outline" size={20} color="#8c959f" style={styles.iconLeft} />
+              <TextInput style={styles.input}
+                placeholder="************ "
+                // value={password}
+                onChangeText={setPassword}
+                placeholderTextColor="gray"
+                secureTextEntry={!showPassword} />
+
+
+            </View>
+
+            <Pressable onPress={togglePasswordVisibility}>
+              <Icon name={showPassword ? "visibility" : "visibility-off"} size={27} color="#8c959f" style={styles.iconRight} />
+            </Pressable>
+
+
+          </View>
+
+          <View style={styles.days}>
+            <TouchableOpacity onPress={toggleCheckbox}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {isChecked ? (
+                  <Icon name="check-box" size={15} color="white" />
+                ) : (
+                  <Icon name="check-box-outline-blank" size={15} color="white" />
+                )}
+              </View>
+            </TouchableOpacity>
+            <Text style={{ color: "gray" }}>Remember for 30days</Text>
+
+            <TouchableOpacity>
+              <Text style={{ fontWeight: "bold", paddingLeft: 120, color: "white" }}>Forgot password</Text>
+
+            </TouchableOpacity>
+
+          </View>
+
+
+          <View style={styles.wrapper}>
+
+            <TouchableOpacity>
+
+              <LinearGradient
+                colors={["#A03232", "#a21caf"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.buttonGradient}
+              >
+                <Text style={styles.buttonText}>Login</Text>
+              </LinearGradient>
+
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.button}>
+              <Icons.Google />
+              <Text style={styles.buttonText}>Log in with Google</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button}>
+              <Icons.Facebook />
+              <Text style={styles.buttonText}>Log in with Facebook </Text>
+            </TouchableOpacity>
+
+          </View>
+
         </View>
 
-
-        <View style={styles.wrapper}>
-            <LinearGradient
-              colors={["#A03232", "#a21caf"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.buttonGradient}
-            >
-              <Text style={styles.buttonText}>Login</Text>
-            </LinearGradient>
-
-          <TouchableOpacity
-            style={styles.button}>
-            <Icons.Google />
-            <Text style={styles.buttonText}>Log in with Google</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button}>
-            <Icons.Facebook />
-            <Text style={styles.buttonText}>Log in with Facebook </Text>
-          </TouchableOpacity>
-
+        <View style={styles.textwrapper}>
+          <Link href="/register">
+            <Text style={{ color: "gray" }}>Don't have an account?</Text>
+            <Text style={{ fontWeight: "bold", color: "white" }}>Sign Up</Text>
+          </Link>
         </View>
 
-      </View>
+      </ScrollView>
 
-      <View style={styles.textwrapper}>
-        <Text style={{ color: "gray" }}>Don't have an account?</Text>
-        <Text style={{ fontWeight: "bold", color: "white" }}>Sign Up</Text>
-      </View>
-
-    </SafeAreaView>
-
+    </SafeAreaView >
   );
+
 }
 
 const styles = StyleSheet.create({
+
+  key: {
+    flex: 1
+  },
+
+  LoginIcon: {
+    flexDirection: "row",
+  },
+
+  sunicon: {
+    top: 5,
+    paddingLeft: 40,
+  },
 
   container: {
     backgroundColor: "#0a0a0a",
@@ -186,7 +222,6 @@ const styles = StyleSheet.create({
   heading: {
     marginTop: 10,
     marginBottom: 50,
-
   },
 
   wrapper: {
@@ -218,7 +253,7 @@ const styles = StyleSheet.create({
 
   iconLeft: {
     position: "absolute",
-    bottom: 10,
+    bottom: 12,
     zIndex: 10,
     left: 10,
   },
@@ -281,7 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 8,
-
+    marginTop: 120,
   },
 
   inputText: {
